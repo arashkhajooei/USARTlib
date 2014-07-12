@@ -1,0 +1,50 @@
+#ifndef UARTInit
+#define UARTInit
+
+
+#define EVEN 0
+#define ODD 1
+
+
+#include <math.h>
+#include <avr/io.h>
+
+void initializeUART(int baud,char AsyncDoubleSpeed,char DataSizeInBits,char ParityEVENorODD,char StopBits)
+{
+	uint16_t UBBRValue =lrint(( 1000000 / 16L / baud ) - 1 );
+	
+	if (AsyncDoubleSpeed == 1) UCSRA = (1 << U2X);
+	
+	UBRRH = (unsigned char) (UBBRValue >> 8);
+
+	//Put the remaining part of the baud number here
+	UBRRL = (unsigned char) UBBRValue;
+
+	//Enable the receiver and transmitter
+	UCSRB = (1 << RXEN) | (1 << TXEN);
+	
+	if (StopBits == 2)	UCSRC = (1 << USBS);	//Set 2 stop bits
+
+	if (ParityEVENorODD == EVEN) UCSRC |= (1 << UPM1); //Sets parity to EVEN
+	if (ParityEVENorODD == ODD) UCSRC |= (3 << UPM0); //set parity to ODD
+	
+	if (DataSizeInBits == 6) UCSRC |= (1 << UCSZ0); //6-bit data length
+	if (DataSizeInBits == 7) UCSRC |= (2 << UCSZ0); //7-bit data length
+	if (DataSizeInBits == 8) UCSRC |= (3 << UCSZ0); //8-bit data length
+	if (DataSizeInBits == 9) UCSRC |= (7 << UCSZ0); //9-bit data length
+	
+	
+}
+
+unsigned char ReveiveUART(void){
+	while (! (UCSRA & (1 << RXC)));
+	return = UDR;
+}
+
+
+void TransmitUART(unsigned char data){
+	while (! (UCSRA & (1 << UDRE)) );
+	UDR = data;
+}
+
+#endif
