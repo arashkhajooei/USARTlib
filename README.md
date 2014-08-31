@@ -30,11 +30,6 @@ stdout = &mystdout;
 
 #lets Putting it All Together :
 
-
-include <avr/io.h>
-
-include <stdio.h>
-
 define F_CPU 7372800// Clock Speed
 
 define BAUD 2400
@@ -85,7 +80,7 @@ int main(void)
 	
     	sprintf(buff,"%f",arash);
     	
-		puts(buff);
+	puts(buff);
 		
 	}
 	
@@ -93,6 +88,7 @@ int main(void)
 
 
 #note :
+dont forget to include the io.h and stdio.h !
 somthing is very important and that is we must add "printf_flt" and "m" to Libraries, and "-Wl,-u,vfprintf" to Options.
 in atmel studio --> clik on the project tab in the top of project-->then click on projectname properties --> Toolchain -->
 AVR/GNU Linker-->libraries then add "printf_flt" and "m" to Libraries ! and one more step in general check the use vprintf library.
