@@ -22,13 +22,14 @@ static int uart_putchar(char c, FILE *stream)
 	return 0;
 }
 
+
 the type of this function must be static int , the first and second line defer that we have an "ENTER" in hyperterm
 
 now we must use stdout or stdin in the top of mine function after USART_INIT :
 stdout = &mystdout;
-
+////////////////////////////////////
 lets Putting it All Together :
-///////////////////////////////////////////////////////
+
 
 #include <avr/io.h>
 #include <stdio.h>
@@ -76,7 +77,7 @@ int main(void)
 		puts(buff);
 	}
 }
-//////////////////////////////////////////////////////
+
 
 note :
 somthing is very important and that is we must add "printf_flt" and "m" to Libraries, and "-Wl,-u,vfprintf" to Options.
