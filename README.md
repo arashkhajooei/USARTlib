@@ -27,16 +27,16 @@ the type of this function must be static int , the first and second line defer t
 
 now we must use stdout or stdin in the top of mine function after USART_INIT :
 stdout = &mystdout;
-////////////////////////////////////
-lets Putting it All Together :
+
+#lets Putting it All Together :
 
 
-#include <avr/io.h>
-#include <stdio.h>
+include <avr/io.h>
+include <stdio.h>
 
-#define F_CPU 7372800// Clock Speed
-#define BAUD 2400
-#define MYUBRR (F_CPU/16/BAUD)-1
+define F_CPU 7372800// Clock Speed
+define BAUD 2400
+define MYUBRR (F_CPU/16/BAUD)-1
 
 
 void USART_Init( unsigned int ubrr)
@@ -79,7 +79,7 @@ int main(void)
 }
 
 
-note :
+#note :
 somthing is very important and that is we must add "printf_flt" and "m" to Libraries, and "-Wl,-u,vfprintf" to Options.
 in atmel studio --> clik on the project tab in the top of project-->then click on projectname properties --> Toolchain -->
 AVR/GNU Linker-->libraries then add "printf_flt" and "m" to Libraries ! and one more step in general check the use vprintf library.
