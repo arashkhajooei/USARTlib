@@ -1,0 +1,63 @@
+/*
+ * GccApplication7.c
+ *
+ * Created: 7/12/2014 4:13:29 AM
+ *  Author: arash
+ */ 
+
+
+#include <avr/io.h>
+#include <stdio.h>
+
+#define F_CPU 7372800// Clock Speed
+#define BAUD 9600
+#define MYUBRR (F_CPU/16/BAUD)-1
+
+
+void USART_Init( unsigned int ubrr)
+{
+
+	/* Set baud rate */
+	UBRRH = (unsigned char)(ubrr>>8);
+	UBRRL = (unsigned char)ubrr;
+	/* Enable receiver and transmitter */
+	UCSRB = (1<<RXEN)|(1<<TXEN);
+	/* Set frame format: 8data, 2stop bit */
+	UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);
+}
+
+void USART_Transmit( unsigned int data )
+{
+	/* Wait for empty transmit buffer */
+	while ( !( UCSRA & (1<<UDRE)) );
+	/* Put data into buffer, sends the data */
+	UDR = data;
+}
+
+
+static int uart_putchar(char c, FILE *stream);
+
+static FILE mystdout = FDEV_SETUP_STREAM(uart_putchar, NULL,_FDEV_SETUP_WRITE);
+
+static int uart_putchar(char c, FILE *stream)
+{
+
+	if (c == '\n')
+	uart_putchar('\r', stream);
+	loop_until_bit_is_set(UCSRA, UDRE);
+	UDR = c;
+	return 0;
+}
+
+int main(void)
+{
+	USART_Init(MYUBRR );
+    char buff[100];
+	double arash=121.2;
+	stdout = &mystdout;
+	while(1){
+		arash+=1;
+    sprintf(buff,"%f",arash);
+		puts(buff);
+	}
+}
