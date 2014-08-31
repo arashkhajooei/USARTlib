@@ -32,10 +32,13 @@ stdout = &mystdout;
 
 
 include <avr/io.h>
+
 include <stdio.h>
 
 define F_CPU 7372800// Clock Speed
+
 define BAUD 2400
+
 define MYUBRR (F_CPU/16/BAUD)-1
 
 
@@ -66,10 +69,11 @@ static int uart_putchar(char c, FILE *stream)
 	return 0;
 }
 
+
 int main(void)
 {
 	USART_Init(MYUBRR );
-  char buff[100];
+        char buff[100];
 	double arash=121.2;
 	stdout = &mystdout;
 	while(1){
