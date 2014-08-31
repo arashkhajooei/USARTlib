@@ -72,14 +72,23 @@ static int uart_putchar(char c, FILE *stream)
 
 int main(void)
 {
+
 	USART_Init(MYUBRR );
+	
         char buff[100];
+        
 	double arash=121.2;
+	
 	stdout = &mystdout;
+	
 	while(1){
+	
     	sprintf(buff,"%f",arash);
+    	
 		puts(buff);
+		
 	}
+	
 }
 
 
