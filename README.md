@@ -6,7 +6,7 @@ USART lib and examples
 
 ok lets use sprint for float variables in ATmel studio 6 !
 
-first we must use this line for make a stream :
+first we must use this line to define a stream :
 
 static FILE mystdout = FDEV_SETUP_STREAM(uart_putchar, NULL,_FDEV_SETUP_WRITE);
 
